@@ -16,7 +16,7 @@ class Tablero:    #Es la clase con la que representaremos el tablero
         self._filas = filas
         self._columnas = columnas
         self._num_minas = num_minas
-        self._grid = [[Casilla() for _ in range(columnas)] for _ in range(filas)] #Con este vamos a creaar una matriz que representa el tablero
+        self._grid = [[Casilla() for _ in range(columnas)] for _ in range(filas)] #Con este vamos a crear una matriz que representa el tablero
         self._colocar_minas()  #se colocaran las minas en el tablero
 
     def _colocar_minas(self):   #Para colocar minas en el tablero
