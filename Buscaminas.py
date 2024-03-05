@@ -92,5 +92,9 @@ class Juego:     #Es la clase que representa el juego de buscaminas
         return True
 
 if __name__ == "__main__":   #Lo vamos a ocupar para iniciar el juego
+    print("Bienvenido al juego del ¡Buscaminas!")
+    print("El terreno esta dividido en 8 filas y 8 columnas")
+    print("Para acceder a ellas recuerda que la primera casilla se representa con 0 0 y la ultima con 7 7")
+    print("Hay 10 minas en el terreno de juego, trata de evitarlas y ganaras, ¡Buena suerte!")
     juego = Juego()
     juego.jugar()                        
