@@ -59,3 +59,37 @@ class Tablero:    #Es la clase con la que representaremos el tablero
                     if self._grid[f][c]._valor == 0:  #Si el valor de la casilla es 0 se revelan las casillas de los lados
                         self._revelar_vecinos(f, c)
                         
+class Juego:     #Es la clase que representa el juego de buscaminas
+    def __init__(self, filas=8, columnas=8, num_minas=10):   #Aqui definimos las dimensiones del tablero y el numero de minas
+        self._tablero = Tablero(filas, columnas, num_minas)
+
+    def jugar(self):  #Lo vamos a utilizar para que el usuario pueda elegir la casilla que quiere revelar
+        while True:
+            print(self._tablero)
+            fila, columna = map(int, input("Introduce la fila y columna separadas por espacio: ").split())
+            self._tablero.revelar_casilla(fila, columna)
+
+            if self._ha_perdido():   #Para dar a conocer que perdimos
+                print("¡Has perdido!")
+                break
+            elif self._ha_ganado():  #Para dar a conocer que ganamos
+                print("¡Felicidades! Has ganado.")
+                break
+
+    def _ha_perdido(self):  #Lo creamos para saber si perdimos 
+        for fila in self._tablero._grid:
+            for casilla in fila:
+                if casilla._revelado and casilla._valor == -1:
+                    return True
+        return False
+
+    def _ha_ganado(self):  #Lo creamos paara saber si ganamos
+        for fila in self._tablero._grid:
+            for casilla in fila:
+                if not casilla._revelado and casilla._valor != -1:
+                    return False
+        return True
+
+if __name__ == "__main__":   #Lo vamos a ocupar para iniciar el juego
+    juego = Juego()
+    juego.jugar()                        
