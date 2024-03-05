@@ -35,3 +35,27 @@ class Tablero:    #Es la clase con la que representaremos el tablero
                 if (0 <= f < self._filas and 0 <= c < self._columnas and 
                     self._grid[f][c]._valor != -1): #Lo usamos para verificar si todavia estamos en el tablero y para saber si hay una mina
                     self._grid[f][c]._valor += 1  #Se incrementa el valor de las casillas +1
+
+    def __str__(self):  #va a representar la casilla como una cadena cuando se use la funcion str
+            return '\n'.join([' '.join([str(casilla) for casilla in fila]) for fila in self._grid]) #Lo ocupamos para representar el tablero como una cadena de texto y hay saltos de linea
+
+    def revelar_casilla(self, fila, columna):  #Lo vamos a ocupar para revelar las casillas en el tablero
+        if not (0 <= fila < self._filas) or not (0 <= columna < self._columnas): #Para que no nos salgamos del tablero
+            print("Coordenadas fuera del tablero.")
+            return
+        if self._grid[fila][columna]._revelado:  #Lo vamos a ocupar para que nos indique si la casilla que elegimos ya esta revelada
+            print("Esta casilla ya ha sido revelada.")
+            return
+        self._grid[fila][columna]._revelado = True #Se marca laa caasilla como reveladaa
+        if self._grid[fila][columna]._valor == 0:  #Se usa para que en caso de que laa casilla no tenga minas se revelen laas casillas de los lados
+            self._revelar_vecinos(fila, columna)
+
+    def _revelar_vecinos(self, fila, columna):  #Lo ocupamos para revelar las casillas de los lados de una casilla dada
+        for f in range(fila-1, fila+2):   #Se hace un bucle para recorrer las casillas de los lados de la casilla actual
+            for c in range(columna-1, columna+2):
+                if (0 <= f < self._filas and 0 <= c < self._columnas and 
+                    not self._grid[f][c]._revelado):   #Lo vamos a usar para saber si la casilla seleccionadaa esta dentro del tablero y si no ah sido revelada pues se revela
+                    self._grid[f][c]._revelado = True
+                    if self._grid[f][c]._valor == 0:  #Si el valor de la casilla es 0 se revelan las casillas de los lados
+                        self._revelar_vecinos(f, c)
+                        
