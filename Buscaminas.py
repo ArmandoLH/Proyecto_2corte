@@ -72,10 +72,14 @@ class Juego:     #Es la clase que representa el juego de buscaminas
             if self._ha_perdido():   #Para dar a conocer que perdimos
                 print("Parece que te haz topado con una mina, que mala suerte")
                 print("¡Has perdido!")
-                break
+                print(input("Presiona Enter para salir del programa."))
+                if input()=='':
+                    break
             elif self._ha_ganado():  #Para dar a conocer que ganamos
                 print("¡Felicidades! Has ganado.")
-                break
+                print(input("Presiona Enter para salir del programa."))
+                if input()=='':
+                    break
 
     def _ha_perdido(self):  #Lo creamos para saber si perdimos 
         for fila in self._tablero._grid:
