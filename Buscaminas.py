@@ -3,7 +3,7 @@ import random   #Proporciona una funcion para generar numeros aleatorios.
 class Casilla:  #Es la clase que vamos a ocupar para representar una casilla en el juego
     def __init__(self, valor=0, revelado=False):
         self._valor = valor  #Representa el numero de minas a los lados de esta 
-        self._revelado = revelado  #Para saber si la casilla se revvelo o nel
+        self._revelado = revelado  #Para saber si la casilla se revelo o nel
 
     def __str__(self):  #va a representar la casilla como una cadena cuando se use la funcion str
         if self._revelado:       #Es para saber si el valor ya se revelo y sino sigue apareciendo X en la casilla
@@ -46,15 +46,15 @@ class Tablero:    #Es la clase con la que representaremos el tablero
         if self._grid[fila][columna]._revelado:  #Lo vamos a ocupar para que nos indique si la casilla que elegimos ya esta revelada
             print("Esta casilla ya ha sido revelada.")
             return
-        self._grid[fila][columna]._revelado = True #Se marca laa caasilla como reveladaa
-        if self._grid[fila][columna]._valor == 0:  #Se usa para que en caso de que laa casilla no tenga minas se revelen laas casillas de los lados
+        self._grid[fila][columna]._revelado = True #Se marca laa casilla como revelada
+        if self._grid[fila][columna]._valor == 0:  #Se usa para que en caso de que la casilla no tenga minas se revelen laas casillas de los lados
             self._revelar_vecinos(fila, columna)
 
     def _revelar_vecinos(self, fila, columna):  #Lo ocupamos para revelar las casillas de los lados de una casilla dada
         for f in range(fila-1, fila+2):   #Se hace un bucle para recorrer las casillas de los lados de la casilla actual
             for c in range(columna-1, columna+2):
                 if (0 <= f < self._filas and 0 <= c < self._columnas and 
-                    not self._grid[f][c]._revelado):   #Lo vamos a usar para saber si la casilla seleccionadaa esta dentro del tablero y si no ah sido revelada pues se revela
+                    not self._grid[f][c]._revelado):   #Lo vamos a usar para saber si la casilla seleccionada esta dentro del tablero y si no ah sido revelada pues se revela
                     self._grid[f][c]._revelado = True
                     if self._grid[f][c]._valor == 0:  #Si el valor de la casilla es 0 se revelan las casillas de los lados
                         self._revelar_vecinos(f, c)
@@ -70,6 +70,7 @@ class Juego:     #Es la clase que representa el juego de buscaminas
             self._tablero.revelar_casilla(fila, columna)
 
             if self._ha_perdido():   #Para dar a conocer que perdimos
+                print("Parece que te haz topado con una mina, que mala suerte")
                 print("¡Has perdido!")
                 break
             elif self._ha_ganado():  #Para dar a conocer que ganamos
