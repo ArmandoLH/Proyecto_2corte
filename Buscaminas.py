@@ -4,7 +4,7 @@ import requests
 import json
 
 openai.api_base = "https://api.openai.com/v1/chat/completions" 
-openai.api_key = "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"
+openai.api_key = "Aqui va la Api_key"
 
 
 class Casilla:  #Es la clase que vamos a ocupar para representar una casilla en el juego
@@ -75,7 +75,7 @@ class Juego:     #Es la clase que representa el juego de buscaminas
         url = "https://api.openai.com/v1/chat/completions"
         headers = {
             "Content-Type": "application/json",
-            "Authorization": "Bearer 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"  # Reemplaza "YOUR_API_KEY" con tu clave de API de OpenAI
+            "Authorization": "Bearer quite mi api_key de aqui porque es privada"  # Aqui va la api_key"
         }
         data = {
             "model": "gpt-3.5-turbo",
