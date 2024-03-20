@@ -1,4 +1,11 @@
 import random   #Proporciona una funcion para generar numeros aleatorios.
+import openai
+import requests
+import json
+
+openai.api_base = "https://api.openai.com/v1/chat/completions" 
+openai.api_key = "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"
+
 
 class Casilla:  #Es la clase que vamos a ocupar para representar una casilla en el juego
     def __init__(self, valor=0, revelado=False):
@@ -62,25 +69,46 @@ class Tablero:    #Es la clase con la que representaremos el tablero
 class Juego:     #Es la clase que representa el juego de buscaminas
     def __init__(self, filas=8, columnas=8, num_minas=10):   #Aqui definimos las dimensiones del tablero y el numero de minas
         self._tablero = Tablero(filas, columnas, num_minas)
-
-    def jugar(self):  #Lo vamos a utilizar para que el usuario pueda elegir la casilla que quiere revelar
+        
+    def _generar_mensaje_motivacional(self, ganador):
+        prompt = "Tu " + ("ganaste" if ganador else "perder") + " el juego. Genera un mensaje motivacional."
+        url = "https://api.openai.com/v1/chat/completions"
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer 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"  # Reemplaza "YOUR_API_KEY" con tu clave de API de OpenAI
+        }
+        data = {
+            "model": "gpt-3.5-turbo",
+            "messages": [
+                {"role": "user", "content": prompt}
+            ],
+            "temperature": 0.5,
+            "max_tokens": 50
+        }
+        response = requests.post(url, headers=headers, json=data)
+        response_data = response.json()
+        print(response_data)  # Imprimir la respuesta completa para análisis
+        return response_data["choices"][0]["message"]["content"].strip()
+    
+    def jugar(self):
         while True:
             print(self._tablero)
             fila, columna = map(int, input("Introduce la fila y columna separadas por espacio: ").split())
             self._tablero.revelar_casilla(fila, columna)
 
-            if self._ha_perdido():   #Para dar a conocer que perdimos
+            if self._ha_perdido():
                 print("Parece que te haz topado con una mina, que mala suerte")
                 print("¡Has perdido!")
-                print(input("Presiona Enter para salir del programa."))
-                if input()=='':
-                    break
-            elif self._ha_ganado():  #Para dar a conocer que ganamos
+                mensaje_motivacional = self._generar_mensaje_motivacional(ganador=False)
+                print("Mensaje motivacional:", mensaje_motivacional)
+                input("Presiona Enter para salir del programa.")
+                break
+            elif self._ha_ganado():
                 print("¡Felicidades! Has ganado.")
-                print(input("Presiona Enter para salir del programa."))
-                if input()=='':
-                    break
-
+                mensaje_motivacional = self._generar_mensaje_motivacional(ganador=True)
+                print("Mensaje motivacional:", mensaje_motivacional)
+                input("Presiona Enter para salir del programa.")
+                break
     def _ha_perdido(self):  #Lo creamos para saber si perdimos 
         for fila in self._tablero._grid:
             for casilla in fila:
