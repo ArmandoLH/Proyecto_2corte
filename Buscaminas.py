@@ -75,7 +75,7 @@ class Juego:     #Es la clase que representa el juego de buscaminas
         url = "https://api.openai.com/v1/chat/completions"
         headers = {
             "Content-Type": "application/json",
-            "Authorization": "Bearer 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"  # Reemplaza "YOUR_API_KEY" con tu clave de API de OpenAI
+            "Authorization": "Bearer aqui ponga su api key, no me dejaba subirla al repositorio"  # Aqui va la Api Key del open ai, quite la mia porque es privada
         }
         data = {
             "model": "gpt-3.5-turbo",
