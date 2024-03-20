@@ -4,7 +4,7 @@ import requests
 import json
 
 openai.api_base = "https://api.openai.com/v1/chat/completions" 
-openai.api_key = "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"
+openai.api_key = "Aqui va la api Key"
 
 
 class Casilla:  #Es la clase que vamos a ocupar para representar una casilla en el juego
